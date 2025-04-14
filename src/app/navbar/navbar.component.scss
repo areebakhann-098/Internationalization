@@ -1,0 +1,51 @@
+/* Navigation Bar Styling */
+.navbar {
+    background-color: #007bff;
+    padding: 0.75rem 1.5rem;
+}
+.title{
+ 
+    display: flex;
+    justify-content: space-between
+    
+}
+
+.navbar-brand {
+    font-size: 2rem;
+    color: #fff;
+    margin-top: 10px;
+}
+.search-box{
+    color: #e4e4e4;
+   
+}
+
+
+.language-buttons {
+    display: flex;
+    color: green;
+    align-items: center;
+    justify-content: flex-end;  /* Align buttons to the right end */
+    margin-left: auto; /* Ensures the buttons stay on the right in a flex container */
+
+
+    .btn {
+        font-size: 1.2rem;  
+        padding: 0.5rem 1.25rem; 
+        margin-left: 10px;
+        border-color: #fff;
+        color: #e21313;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+            background-color: #e4e4e4;
+            color: #17a325;
+        }
+
+        &.btn-success {
+            color: #f8fcf9;
+        }
+    }
+}
