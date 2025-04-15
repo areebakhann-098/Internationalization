@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Inject } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NavbarComponent } from './navbar/navbar.component';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +13,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 export class AppComponent {
 
   translate: TranslateService = inject(TranslateService);
+  document = inject(DOCUMENT);
 
-  // 📝 Blog posts array with translation keys
   posts = [
     { title: 'POST_1_TITLE', content: 'POST_1_CONTENT' },
     { title: 'POST_2_TITLE', content: 'POST_2_CONTENT' },
@@ -25,10 +26,23 @@ export class AppComponent {
     this.translate.setDefaultLang('en');
 
     const browserLang = this.translate.getBrowserLang();
-    this.translate.use(browserLang?.match(/en|ur/) ? browserLang : 'en');
+    const langToUse = browserLang?.match(/en|ur/) ? browserLang : 'en';
+    this.translate.use(langToUse);
+    this.setDirection(langToUse);
+
+    // Also listen for future language changes
+    this.translate.onLangChange.subscribe(event => {
+      this.setDirection(event.lang);
+    });
   }
 
   translateText(lang: string) {
     this.translate.use(lang);
+    this.setDirection(lang); // Also call this in case user manually changes language
+  }
+
+  private setDirection(lang: string) {
+    const dir = lang === 'ur' ? 'rtl' : 'ltr';
+    this.document.documentElement.dir = dir;
   }
 }
